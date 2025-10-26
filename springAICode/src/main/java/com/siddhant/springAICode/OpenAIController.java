@@ -43,20 +43,20 @@ public class OpenAIController {
     @Qualifier("openAiEmbeddingModel")
     private EmbeddingModel embeddingModel;
 
-    public OpenAIController(OpenAiChatModel chatModel){
-        this.chatClient=ChatClient.create(chatModel);
-    }
+//    public OpenAIController(OpenAiChatModel chatModel){
+//        this.chatClient=ChatClient.create(chatModel);
+//    }
 //    private ChatMemory chatMemory = MessageWindowChatMemory.builder().build();
 
     //Use it when dealing with multiple models
 
 
     //Use it only when dealing with a single model, NOTE: Constructor injection takes prior to field injection
-//    public OpenAIController (ChatClient.Builder builder, ChatMemory chatMemory){
-//        this.chatClient = builder
-//                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
-//                .build();
-//    }
+    public OpenAIController (ChatClient.Builder builder, ChatMemory chatMemory){
+        this.chatClient = builder
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
+                .build();
+    }
 
 //    public OpenAIController (ChatClient.Builder builder){
 //        this.chatClient = builder
