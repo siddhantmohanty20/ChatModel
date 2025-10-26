@@ -27,44 +27,19 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:5173")
 public class OpenAIController {
 
-//    @Autowired
-//    private OpenAiChatModel chatModel;
-//
-//    public OpenAIController(OpenAiChatModel chatModel){
-//        this.chatModel=chatModel;
-//    }
-
     private ChatClient chatClient;
 
     @Autowired
     private VectorStore vectorStore;
 
     @Autowired
-    @Qualifier("openAiEmbeddingModel")
     private EmbeddingModel embeddingModel;
 
-//    public OpenAIController(OpenAiChatModel chatModel){
-//        this.chatClient=ChatClient.create(chatModel);
-//    }
-//    private ChatMemory chatMemory = MessageWindowChatMemory.builder().build();
-
-    //Use it when dealing with multiple models
-
-
-    //Use it only when dealing with a single model, NOTE: Constructor injection takes prior to field injection
     public OpenAIController (ChatClient.Builder builder, ChatMemory chatMemory){
         this.chatClient = builder
                 .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
                 .build();
     }
-
-//    public OpenAIController (ChatClient.Builder builder){
-//        this.chatClient = builder
-//                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
-//                .build();
-//    }
-
-
 
     @GetMapping("/api/{message}")
     public ResponseEntity<String> getAnswer(@PathVariable String message){
@@ -124,6 +99,5 @@ public class OpenAIController {
     public List<Document> getProducts(@RequestParam String text){
 
           return vectorStore.similaritySearch(SearchRequest.builder().query(text).topK(2).build());
-//        return vectorStore.similaritySearch(text);
     }
 }

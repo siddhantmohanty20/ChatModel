@@ -20,7 +20,6 @@ public class DataInitializer {
     @PostConstruct
     public void initData(){
         TextReader reader = new TextReader(new ClassPathResource("product_details.txt"));
-//        TokenTextSplitter tokenTextSplitter = new TokenTextSplitter();  //default constructor that defines the chunk with default values
         TokenTextSplitter tokenTextSplitter = new TokenTextSplitter(100,30,5,500,false);
         List<Document> documents = tokenTextSplitter.split(reader.get());
         vectorStore.add(documents);
